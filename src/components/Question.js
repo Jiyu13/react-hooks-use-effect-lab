@@ -9,7 +9,18 @@ function Question({ question, onAnswered }) {
   // CB update timeRemaining by decreasing 1 each second
   // pass timeRemaining into 2nd dependency
   useEffect(() => {
-    setTimeout(() => setTimeRemaining(timeRemaining - 1), 1000)  
+    setTimeout(() => {setTimeRemaining(timeRemaining - 1)}, 1000);
+    
+    // Diliverable 2: use cleanup function for useEffect
+    // reset timeRemaing to 10 for next question when it hits 0
+    // call onAnswer callback prop with param "false"
+    return function cleanup() {
+      if ( timeRemaining === 0) {
+        setTimeRemaining(10)
+        onAnswered(false)
+      }
+    }
+  
   }, [timeRemaining])
 
 
